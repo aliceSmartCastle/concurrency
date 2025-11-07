@@ -11,3 +11,5 @@ concurrency of python in my code
    a netwrok connectting thread simple demo 
 ## Deamondemo.py
    a Deamon thread easy to use nya~~
+## thraedPoolExe.py
+  download picture has some i don know the bug nya~~
