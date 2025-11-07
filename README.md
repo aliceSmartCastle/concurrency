@@ -9,4 +9,5 @@ concurrency of python in my code
    of ten thread show nya
 ## networkThreadDemo.py
    a netwrok connectting thread simple demo 
-
+## Deamondemo.py
+   a Deamon thread easy to use nya
