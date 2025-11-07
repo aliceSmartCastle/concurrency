@@ -1,7 +1,7 @@
 import http.client
 from typing import List, Any
 from urllib.error import URLError
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 from urllib import error
 from threading import Thread
 from FuncTip import CalculateAny, spiteLine
@@ -14,9 +14,9 @@ class NetworkThread(Thread):
         self.httReason = URLError(reason='')
         self.address = urlAddress
         self.extraError = None
-        self.addressList:List[Any] = []
-        self.stateCodeList:List[Any] = []
-        self.reasonList:List[Any] = []
+        self.addressList: List[Any] = []
+        self.stateCodeList: List[Any] = []
+        self.reasonList: List[Any] = []
 
     def addressNull(self, address) -> None:
         if self.address:
@@ -26,7 +26,7 @@ class NetworkThread(Thread):
             self.addressList.append(address)
 
     @staticmethod
-    def reasonNull(reason) -> list:
+    def reasonNull(reason) -> List[str]:
         if reason:
             ...
         else:
@@ -35,7 +35,11 @@ class NetworkThread(Thread):
 
     def run(self) -> None:
         try:
-            response = urlopen(self.address)
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+            request = Request(self.address, headers=headers)
+            response = urlopen(request)
             self.addressList.append(self.address)
             self.httStateCode = response.code
             if self.httStateCode == 200:
@@ -51,21 +55,21 @@ class NetworkThread(Thread):
             self.httReason = urlErr
             print(f"{self.address} is connecting during urlError")
             self.addressNull(address=self.address)
-            self.stateCodeList.append(None)
-            self.reasonList.append(self.httReason)
+            reasonStr=self.httReason.reason
+            self.stateCodeList.append(str(reasonStr)[slice(7,10)])
+            self.reasonList.append(str(reasonStr)[slice(11,50)].strip())
         except http.client.RemoteDisconnected as httErr:
             httErr.errno = self.extraError
             print(f"{self.address} is connecting during extraError")
             self.addressNull(address=self.address)
             self.stateCodeList.append(self.extraError)
 
-
-        # print(dict(zip(tuple(zip(self.addressList,self.stateCodeList)),self.reasonNull(self.reasonList))))
         finalInfo = tuple(zip(self.addressList, self.stateCodeList, self.reasonNull(self.reasonList)))
         print(finalInfo[0])
 
-@CalculateAny
-def main():
+
+@CalculateAny        #calaculate all thread runging ending total time
+def main() ->None: 
     url = [
         'https://github.com',
         'https://www.python.org',
