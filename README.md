@@ -13,3 +13,5 @@ concurrency of python in my code
    a Deamon thread easy to use nya~~
 ## thraedPoolExe.py
   download picture has some i don know the bug nya~~
+## PngDownloader.py
+it can download png file on the this .py code exhibit simple wedsite list nya~~
