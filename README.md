@@ -17,3 +17,5 @@ concurrency of python in my code
 it can download png file on the this .py code exhibit simple wedsite list nya~~
 ## coroutine.py
 simple Calculate power number coroutine simulation
+## multiSyncioWait.py
+simple multi async task show nya~~
